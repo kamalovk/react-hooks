@@ -5,17 +5,18 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import '../main/main.scss'
 import OpenPhotoContext from '../open-photo/open-photo-context'
+import FavoritePhotoContext from '../favorite/favorite-context'
+import Favorite from '../favorite/favorite';
 function Main() {
   let accessToken = "nPnKCzSzGzaADPN43hJe4WernJ8xq3FkZtrOkGo9_vg" ;
   let main_url = 'https://api.unsplash.com/'
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(1)
-  let fullSizeOpenStyle = {
-    style: 'dd'
-  }
+  
+  
 
   const {setPhoto} = useContext(OpenPhotoContext)
-
+  const { favPhoto ,setFavPhoto} = useContext(FavoritePhotoContext)
   function pageUp() {
     setPage(prev => prev + 1)
   }
@@ -28,12 +29,20 @@ function Main() {
       setPage(prev => prev)
     }
   }
+  function addFavPhoto(photo){
+    setFavPhoto([...favPhoto, {
+      id: photo.id,
+      photo: photo
+    }]);
+    console.log(favPhoto)
+    
+  }
   
   useEffect(()=>{
     axios.get(main_url + 'photos?page='+page+'&client_id='+ accessToken)
       .then((res) => {
         setPhotos(res.data)
-        
+        console.log(res.data)
       })
       
   }, [page])
@@ -60,7 +69,7 @@ function Main() {
                 <div className="content-icons">
                   <div className="content-icons-like content-icons-item">
                     
-                    <button onClick={() => isOpen(photo.urls.small)}>like</button>
+                    <button onClick={() => addFavPhoto(photo)}>like</button>
                   </div>
                   <div className="content-icons-open content-icons-item">
                     
@@ -68,6 +77,7 @@ function Main() {
                   </div>
                   <div className="content-icons-download content-icons-item">
                     <a href={photo.urls.small} download={photo.user.first_name}>DOWNLOAD</a>
+                    
                   </div>
                 </div>
             </div>
