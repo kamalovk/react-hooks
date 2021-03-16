@@ -19,21 +19,21 @@ function Header() {
     }
   }
   
-  function headerDownMake(e) {
-    setIsOn(current => !current);
-    
-      
+  function headerDownMake(id) {
+    setIsOn(current => !current); 
+    console.log(id + ' ' + isOn)
   }
+  
   if(isOn == true){
     headerDownClass = 'header-container header-container-down'
-    
   }
   else if(isOn == false){
     headerDownClass = 'header-container'
   }
+  if(navObjects.search.id && isOn == true) {
+    
+  }
 
-
-  
   return(
     <div className='header'>
       <div className={headerDownClass} >
@@ -43,23 +43,20 @@ function Header() {
         </div>
         <div className='nav-container'>
           <ul className='nav-container-ul'>
-            <li id="awd" className='nav-container-li' onClick = {  headerDownMake }>
+            <li id="awd" className='nav-container-li' onClick = {  () =>  headerDownMake(navObjects.search.id) }>
               <img></img>
-              <Link>{navObjects.search.value}</Link>
+              <a>{navObjects.search.value}</a>
             </li>
             <li className='nav-container-li' >
               <img></img>
               <Link to="/favorite">Избранное</Link>
             </li>
-            <li className='nav-container-li' onClick = {  headerDownMake }>
+            <li className='nav-container-li' onClick = {() =>  headerDownMake(navObjects.history.id) }>
               <img></img>
-              <Link>{navObjects.history.value}</Link>
+              <a>{navObjects.history.value}</a>
             </li>
           </ul>
         </div>
-        
-        
-        
       </div>
       <div className='header-hide-content'>
             

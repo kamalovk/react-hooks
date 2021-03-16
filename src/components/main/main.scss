@@ -8,6 +8,7 @@
       height: 100%;
       .grid-item{
         position: relative;
+        width: 486px;
         &:hover .photos-block-background{
           filter: blur(5px);
             transition: 0.4s;

@@ -12,20 +12,15 @@ function Main() {
   let main_url = 'https://api.unsplash.com/'
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(1)
-  
-  
-
   const {setPhoto} = useContext(OpenPhotoContext)
   const { favPhoto ,setFavPhoto} = useContext(FavoritePhotoContext)
   function pageUp() {
     setPage(prev => prev + 1)
   }
   function pageDown() {
-    
     if(page > 1){
       setPage(prev => prev - 1)
-    }
-    else{
+    } else{
       setPage(prev => prev)
     }
   }
@@ -34,31 +29,21 @@ function Main() {
       id: photo.id,
       photo: photo
     }]);
-    console.log(favPhoto)
-    
   }
-  
   useEffect(()=>{
     axios.get(main_url + 'photos?page='+page+'&client_id='+ accessToken)
       .then((res) => {
         setPhotos(res.data)
-        console.log(res.data)
       })
-      
   }, [page])
-  
   function isOpen(obj){
     setPhoto(obj)
   }
-  
-  
   const mainPagePhotos = photos.map((photo) => 
     ( 
-      
           <div className="grid-item" key = {photo.id}>
             <div className="photos-block-background">
                 <img src={photo.urls.small} className="photos-block-background-img"></img>
-                
             </div>  
             <div className='photos-block-content'> 
                 <div className="content-profile">
@@ -76,18 +61,15 @@ function Main() {
                     <Link to="/open-photo" onClick={() => isOpen(photo)}>open</Link>
                   </div>
                   <div className="content-icons-download content-icons-item">
-                    <a href={photo.urls.small} download={photo.user.first_name}>DOWNLOAD</a>
-                    
+                    <a href={photo.urls.small} download={photo.user.first_name}>DOWNLOAD</a>    
                   </div>
                 </div>
             </div>
           </div>
-      
     ))
-  
+
   return(
     <div className='main-content'>
-      
       <div className='photos-block grid'>
         <button onClick={pageDown}>pageDown</button>
         <button onClick={pageUp}>pageUp</button>
@@ -98,10 +80,8 @@ function Main() {
           </Masonry>
         </ResponsiveMasonry>
       </div>
-      
     </div>
   )
 }
-
 
 export default Main;

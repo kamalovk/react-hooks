@@ -1,11 +1,18 @@
 import React, {useContext} from 'react';
 
 import '../open-photo/open-photo.scss'
+import FavoritePhotoContext from '../favorite/favorite-context'
 import OpenPhotoContext from '../open-photo/open-photo-context'
 function OpenPhoto() {
+const { favPhoto, setFavPhoto } = useContext(FavoritePhotoContext)
 const {photo} = useContext(OpenPhotoContext)
+function addFavPhoto(photo){
+  setFavPhoto([...favPhoto, {
+    id: photo.id,
+    photo: photo
+  }]);
+}
   return(
-    
     <div className='container-photo'>
       <div className='container-photo-info'>
         <div className='container-photo-info-left'>
@@ -14,7 +21,7 @@ const {photo} = useContext(OpenPhotoContext)
           <span className="content-profile-link">{'@' +photo.user.instagram_username}</span>
         </div>
         <div className='container-photo-info-right'>
-          <button>like</button>
+          <button onClick={() => addFavPhoto(photo)}>like</button>
           <button>download</button>
         </div>
       </div>
